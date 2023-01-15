@@ -10,11 +10,13 @@ public class Main {
                                      + "first_name VARCHAR(30) NOT NULL, "
                                      + "PRIMARY KEY (student_id))";
 
+    static final String INSERT_STUDENTS = "INSERT INTO students (last_name, first_name) VALUES (?, ?)";
+
     public static void main(String[] args) {
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = conn.createStatement();
-             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO students (last_name, first_name) VALUES (?, ?)")) {
+             PreparedStatement preparedStatement = conn.prepareStatement(INSERT_STUDENTS)) {
 
             statement.executeUpdate(CREATE_TABLE);
 
