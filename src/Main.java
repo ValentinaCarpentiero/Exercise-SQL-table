@@ -1,24 +1,22 @@
 import java.sql.*;
 
 public class Main {
-    static final String URL = "jdbc:mysql://localhost:3306/newdb";
+    static final String DB_NAME = "newdb";
+    static final String URL = "jdbc:mysql://localhost:3306/"+DB_NAME;
     static final String USER = "developer";
     static final String PASSWORD = "userpasw";
-    static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS students ("
-                                     + " student_id INT(10) NOT NULL AUTO_INCREMENT, "
-                                     + "last_name VARCHAR(30) NOT NULL, "
-                                     + "first_name VARCHAR(30) NOT NULL, "
-                                     + "PRIMARY KEY (student_id))";
-
-    static final String INSERT_STUDENTS = "INSERT INTO students (last_name, first_name) VALUES (?, ?)";
 
     public static void main(String[] args) {
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = conn.createStatement();
-             PreparedStatement preparedStatement = conn.prepareStatement(INSERT_STUDENTS)) {
+             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO students (last_name, first_name) VALUES (?, ?)")) {
 
-            statement.executeUpdate(CREATE_TABLE);
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS students ("
+                    + " student_id INT(10) NOT NULL AUTO_INCREMENT, "
+                    + "last_name VARCHAR(30) NOT NULL, "
+                    + "first_name VARCHAR(30) NOT NULL, "
+                    + "PRIMARY KEY (student_id))");
 
             insertStudents(preparedStatement, "Victor", "Oshimen");
             insertStudents(preparedStatement, "Khvicha", "Kvaratskhelia");
